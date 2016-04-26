@@ -83,11 +83,15 @@ public class Naloga2Test {
             System.setIn(new FileInputStream(in));
             // Set output file as system standard output.
             System.setOut(new PrintStream(out));
+            long start = System.nanoTime();
             // Call Naloga2 main method with corresponding arguments.
             Naloga2.main(args[i]);
+            long end = System.nanoTime();
             // Reset to initial stdio.
             System.setIn(systemIn);
             System.setOut(systemOut);
+
+            System.out.printf("(%s) %s: %.3fms\n", algorithm, in.getName().split("\\.")[0], (end - start) / 1e6);
 
             // Build assertion message and assert that expected file and Naloga2 input match.
             String message = String.format("'%s %s': %s %s %s", args[i][0], args[i][1], in.getName(), out.getName(), ex.getName());
